@@ -51,16 +51,16 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if(claims == null){
             throw new JwtException("token 异常");
         }
-        String username = (String) claims.get("username");
-        SysUser sysUser = sysUserService.getUserByUsername(username);
+        String userCode = (String) claims.get("userCode");
+        SysUser sysUser = sysUserService.getUserByUsername(userCode);
 
-        String cachToken = (String) redisUtil.get(username);
+        String cachToken = (String) redisUtil.get(userCode);
         if(cachToken == null){
             throw new JwtException("token 已过期");
         }
-        redisUtil.set(username,token,jwtUtil.getExpire());
+        redisUtil.set(userCode,token,jwtUtil.getExpire());
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, null, sysUserService.getUserRoleAndAuth(sysUser.getId()));
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userCode, null, sysUserService.getUserRoleAndAuth(sysUser.getId()));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request,response);
 

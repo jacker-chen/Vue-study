@@ -40,7 +40,7 @@ public class JwtLogoutSuccessHandler implements LogoutSuccessHandler {
             new SecurityContextLogoutHandler().logout(request,response,authentication);
         }
         String token = request.getHeader("Authorization").substring(jwtUtil.getHeader().length()).trim();
-        String username = jwtUtil.getUsernameFromToken(token);
+        String username = jwtUtil.getUserCodeFromToken(token);
         log.info(token);
         log.info(username+"，已登出系统");
         response.setHeader("authorization","");

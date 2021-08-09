@@ -21,5 +21,11 @@ public interface ISysUserService extends IService<SysUser> {
     List<GrantedAuthority> getUserRoleAndAuth(Long user_id);
     SysUser getUserByUsername(String username);
 
-    SysPage getUsers(Object o, Integer curPage, Integer pageSize);
+    SysPage getUsers(String userName, Integer curPage, Integer pageSize);
+
+    int add(SysUser sysUser);
+
+    int del(Long[] ids);
+
+    int edit(SysUser sysUser);
 }

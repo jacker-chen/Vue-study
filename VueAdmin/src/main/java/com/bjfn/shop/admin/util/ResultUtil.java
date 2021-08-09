@@ -14,6 +14,13 @@ public class ResultUtil {
         return result.setCode(code).setData(data);
     }
 
+    public static <T> Result<T> success() {
+        Result result = new Result();
+        result.setMsg("操作成功");
+        result.setCode(ResultEnum.SUCCESS).setData("");
+        return result;
+    }
+
     public static <T> Result<T> success(T data) {
         Result result = new Result();
         result.setMsg("操作成功");

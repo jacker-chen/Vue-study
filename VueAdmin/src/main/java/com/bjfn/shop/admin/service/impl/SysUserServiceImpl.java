@@ -1,20 +1,29 @@
 package com.bjfn.shop.admin.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bjfn.shop.admin.common.dto.SysPage;
 import com.bjfn.shop.admin.entity.SysAuth;
 import com.bjfn.shop.admin.entity.SysRole;
 import com.bjfn.shop.admin.entity.SysUser;
+import com.bjfn.shop.admin.entity.SysUserRole;
 import com.bjfn.shop.admin.mapper.SysUserMapper;
+import com.bjfn.shop.admin.mapper.SysUserRoleMapper;
 import com.bjfn.shop.admin.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bjfn.shop.admin.util.RedisUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +45,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public List<SysUser> getUserList() {
         return sysUserMapper.selectList(null);
@@ -48,8 +63,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     public List< GrantedAuthority> getUserRoleAndAuth(Long user_id){
         SysUser sysUser = sysUserMapper.selectById(user_id);
-        if(redisUtil.hasKey("GrantedAuthority:" + sysUser.getUsername())){
-            String authStr = (String) redisUtil.get("GrantedAuthority:" + sysUser.getUsername());
+        if(redisUtil.hasKey("GrantedAuthority:" + sysUser.getUserCode())){
+            String authStr = (String) redisUtil.get("GrantedAuthority:" + sysUser.getUserCode());
             return AuthorityUtils.commaSeparatedStringToAuthorityList(authStr);
         }
         String authorityStr = getAuthorityStr(user_id);
@@ -58,13 +73,47 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public SysUser getUserByUsername(String username) {
-        return sysUserMapper.getUserByUsername(username);
+    public SysUser getUserByUsername(String userCode) {
+        return sysUserMapper.getUserByUserCode(userCode);
     }
 
     @Override
-    public SysPage getUsers(Object o, Integer curPage, Integer pageSize) {
-        return null;
+    public SysPage getUsers(String userName, Integer curPage, Integer pageSize) {
+        Page<SysUser> userPage = new Page<>(curPage,pageSize);
+        if(!StringUtils.isBlank(userName)){
+            userPage = sysUserMapper.selectPage(userPage, new QueryWrapper<SysUser>().lambda().like(SysUser::getUserName,userName));
+        }else{
+            userPage = sysUserMapper.selectPage(userPage, null);
+        }
+        SysPage sysPage = new SysPage(curPage,pageSize,userPage.getTotal(),userPage.getRecords());
+        return sysPage;
+    }
+
+    @Override
+    public int add(SysUser sysUser) {
+        SysUser userByUserCode = sysUserMapper.getUserByUserCode(sysUser.getUserCode());
+        if(userByUserCode != null){
+            return -1;
+        }
+        sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
+        sysUser.setOperUser(SecurityContextHolder.getContext().getAuthentication().getName());
+        sysUser.setCreateTime(new Date());
+        int insert = sysUserMapper.insert(sysUser);
+        return insert;
+    }
+
+    @Override
+    public int del(Long[] ids) {
+        sysUserRoleMapper.delete(new QueryWrapper<SysUserRole>().in("user_id",ids));
+        int i = sysUserMapper.deleteBatchIds(Arrays.asList(ids));
+        return i;
+    }
+
+    @Override
+    public int edit(SysUser sysUser) {
+        sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
+        int i = sysUserMapper.updateById(sysUser);
+        return i;
     }
 
     /**
@@ -88,7 +137,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             }
         }
         //写入缓存
-        redisUtil.set("GrantedAuthority:"+ sysUser.getUsername(),sb.toString(),60*60);
+        redisUtil.set("GrantedAuthority:"+ sysUser.getUserCode(),sb.toString(),60*60);
         return sb.toString();
     }
 }

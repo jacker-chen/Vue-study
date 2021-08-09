@@ -3,6 +3,8 @@ package com.bjfn.shop.admin.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,7 +31,7 @@ public class SysUser implements Serializable {
     /**
      * 用户名
      */
-    private String username;
+    private String userName;
 
     /**
      * 密码
@@ -40,6 +42,15 @@ public class SysUser implements Serializable {
      * 状态（0-正常，1-删除，2-禁用）
      */
     private String status;
+
+    /**
+     * 用户编码
+     */
+    private String userCode;
+
+    private String sex;
+    private Date createTime;
+    private String operUser;
 
 
 }

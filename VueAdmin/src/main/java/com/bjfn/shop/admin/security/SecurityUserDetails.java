@@ -21,9 +21,10 @@ import java.util.List;
 public class SecurityUserDetails extends SysUser implements UserDetails {
 
     private Long id;
-    private String username;
+    private String userName;
     private String password;
     private String status;
+    private String userCode;
 
     private List<GrantedAuthority> authorities;
 
@@ -40,7 +41,7 @@ public class SecurityUserDetails extends SysUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.userCode;
     }
 
     @Override

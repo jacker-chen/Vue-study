@@ -1,8 +1,10 @@
 package com.bjfn.shop.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bjfn.shop.admin.common.dto.SysPage;
 import com.bjfn.shop.admin.entity.SysAuth;
-import com.bjfn.shop.admin.entity.SysUser;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,5 +15,11 @@ import com.bjfn.shop.admin.entity.SysUser;
  * @since 2021-07-22
  */
 public interface ISysAuthService extends IService<SysAuth> {
+    SysPage getList(String authName, Integer curPage, Integer pageSize);
 
+    int del(Long[] ids);
+
+    int add(SysAuth sysAuth);
+
+    SysPage search(Map<String, Object> searchForm);
 }

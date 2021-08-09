@@ -28,18 +28,18 @@ public class JwtUtil {
     /**
      * 根据用户信息生成Token
      *
-     * @param username
+     * @param userCode
      * @return
      */
-    public String generateToken(String username) {
+    public String generateToken(String userCode) {
         HashMap<String, Object> claims = new HashMap<>();
-        claims.put("username", username);
+        claims.put("userCode", userCode);
         claims.put("created", new Date());
         return generateToken(claims);
     }
     public String generateToken(Authentication authentication) {
         HashMap<String, Object> claims = new HashMap<>();
-        claims.put("username",authentication.getName());
+        claims.put("userCode",authentication.getName());
         claims.put("created",new Date());
         return generateToken(claims);
     }
@@ -49,16 +49,16 @@ public class JwtUtil {
      * @param token
      * @return
      */
-    public String getUsernameFromToken(String token) {
-        String username;
+    public String getUserCodeFromToken(String token) {
+        String userCode;
         try {
             Claims claims = getClaimsFromToken(token);
             String subject = claims.getSubject();
-            username = (String) claims.get("username");
+            userCode = (String) claims.get("userCode");
         } catch (Exception e) {
-            username = null;
+            userCode = null;
         }
-        return username;
+        return userCode;
     }
 
     /**
@@ -89,12 +89,12 @@ public class JwtUtil {
      * @return
      */
     public boolean validateToken(String token, UserDetails userDetails) {
-        String username = getUsernameFromToken(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        String userCode = getUserCodeFromToken(token);
+        return userCode.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
-    public boolean validateToken(String token, String userName) {
-        String username = getUsernameFromToken(token);
-        return username.equals(userName);
+    public boolean validateToken(String token, String userCode) {
+        String username = getUserCodeFromToken(token);
+        return username.equals(userCode);
     }
 
     /**

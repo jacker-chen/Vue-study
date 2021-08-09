@@ -19,7 +19,7 @@ import java.util.List;
 @Mapper
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
-    SysUser getUserByUsername(String username);
+    SysUser getUserByUserCode(String userCode);
 
     List<SysRole> getRoleByUserId(Long user_id);
 

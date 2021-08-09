@@ -3,9 +3,9 @@ package com.bjfn.shop.admin.security.filter;
 import com.bjfn.shop.admin.common.exception.KaptchaException;
 import com.bjfn.shop.admin.security.handler.LoginFailureHandler;
 import com.bjfn.shop.admin.util.RedisUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -46,11 +46,11 @@ public class KaptchaFilter extends OncePerRequestFilter {
     private void validate(HttpServletRequest request) {
         String code = request.getParameter("code");
         String key = request.getParameter("key");
-        if(StringUtils.isBlank(code) || StringUtils.isBlank(key)){
+        if(StringUtils.isEmpty(code) || StringUtils.isEmpty(key)){
             throw new KaptchaException("验证码不能为空");
         }
-        String o = redisUtil.get(key).toString();
-        if(StringUtils.isBlank(o)){
+        Object o = redisUtil.get(key);
+        if(StringUtils.isEmpty(o)){
             throw new KaptchaException("验证码已过期");
         }
         if(!o.equals(code)){

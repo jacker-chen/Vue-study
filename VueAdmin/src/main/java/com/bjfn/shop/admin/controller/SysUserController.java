@@ -7,12 +7,9 @@ import com.bjfn.shop.admin.service.ISysUserService;
 import com.bjfn.shop.admin.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,7 +37,29 @@ public class SysUserController {
     @ApiOperation(value = "分页获取用户信息")
     @GetMapping("/getUsers")
     public Result getUsers(@RequestParam(value = "curPage",defaultValue = "1") Integer curPage, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
-        sysUserService.getUsers(null,curPage,pageSize);
-        return ResultUtil.success("");
+        return ResultUtil.success(sysUserService.getUsers(null,curPage,pageSize));
+    }
+
+    @ApiOperation(value = "根据用户名查询用户列表信息")
+    @GetMapping("/search/{userName}")
+    public Result searchUsers(@PathVariable("userName") String userName,@RequestParam(value = "curPage",defaultValue = "1") Integer curPage, @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+        return ResultUtil.success(sysUserService.getUsers(userName,curPage,pageSize));
+    }
+
+    @ApiOperation(value="新增用户")
+    @PostMapping("/add")
+    public Result add(@RequestBody SysUser sysUser){
+        return ResultUtil.success(sysUserService.add(sysUser));
+    }
+
+    @DeleteMapping("/del")
+    public Result del(@ApiParam("id为数组")@RequestParam(value = "ids") Long[] ids){
+        return ResultUtil.success(sysUserService.del(ids));
+    }
+
+    @ApiOperation(value = "修改用户")
+    @PostMapping("/edit")
+    public Result edit(@RequestBody SysUser sysUser){
+        return ResultUtil.success(sysUserService.edit(sysUser));
     }
 }

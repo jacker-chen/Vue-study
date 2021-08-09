@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public Result handler(RuntimeException e){
         log.error("运行时异常：---->" + e.getMessage());
-        return ResultUtil.fail("系统异常！异常信息如下："+e.getMessage());
+        return ResultUtil.fail(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

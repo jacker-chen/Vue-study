@@ -18,8 +18,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private SysUserServiceImpl sysUserService;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        SysUser sysUser = sysUserService.getUserByUsername(username);
+    public UserDetails loadUserByUsername(String userCode) throws UsernameNotFoundException {
+        SysUser sysUser = sysUserService.getUserByUsername(userCode);
         if(sysUser == null){
             throw new InternalAuthenticationServiceException("用户不存在");
         }

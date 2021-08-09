@@ -3,8 +3,8 @@
 <mapper namespace="com.bjfn.shop.admin.mapper.SysUserMapper">
 
     <!--根据用户名查询用户信息-->
-    <select id="getUserByUsername" resultType="com.bjfn.shop.admin.entity.SysUser">
-        select * from sys_user a where a.`status` = 0 and a.username = #{username}
+    <select id="getUserByUserCode" resultType="com.bjfn.shop.admin.entity.SysUser">
+        select * from sys_user a where a.`status` = 0 and a.user_code = #{userCode}
     </select>
     <!--根据用户id查询角色-->
     <select id="getRoleByUserId" resultType="com.bjfn.shop.admin.entity.SysRole">
