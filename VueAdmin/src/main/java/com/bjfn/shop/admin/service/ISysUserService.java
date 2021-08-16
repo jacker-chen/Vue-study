@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -28,4 +29,8 @@ public interface ISysUserService extends IService<SysUser> {
     int del(Long[] ids);
 
     int edit(SysUser sysUser);
+
+    boolean allotRole(Long userId, Long[] roleIds);
+
+    Map<String, Object> getUserRoleById(Long userId);
 }

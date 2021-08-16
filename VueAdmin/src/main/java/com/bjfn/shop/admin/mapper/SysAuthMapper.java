@@ -1,8 +1,11 @@
 package com.bjfn.shop.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.bjfn.shop.admin.common.dto.AuthTree;
 import com.bjfn.shop.admin.entity.SysAuth;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SysAuthMapper extends BaseMapper<SysAuth> {
 
+    List<AuthTree> getAuthByParenId(Integer parentId);
 }

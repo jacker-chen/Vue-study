@@ -2,6 +2,8 @@ package com.bjfn.shop.admin.security.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.bjfn.shop.admin.common.lang.Result;
+import com.bjfn.shop.admin.entity.SysUser;
+import com.bjfn.shop.admin.service.impl.SysUserServiceImpl;
 import com.bjfn.shop.admin.util.JwtUtil;
 import com.bjfn.shop.admin.util.RedisUtil;
 import com.bjfn.shop.admin.util.ResultUtil;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 
 /**
  * 登录成功处理器
@@ -29,6 +32,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Autowired
     private RedisUtil redisUtil;
 
+    @Autowired
+    private SysUserServiceImpl sysUserService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=UTF-8");
@@ -37,8 +43,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         String token = jwtUtil.generateToken(authentication.getName());
         response.setHeader("authorization",token);
         redisUtil.set(authentication.getName(),token,jwtUtil.getExpire());
-        Result<String> success = ResultUtil.success(authentication.getName());
-        outputStream.write(JSONUtil.toJsonStr(success).getBytes(StandardCharsets.UTF_8));
+        SysUser sysUser = sysUserService.getUserByUsername(authentication.getName());
+        String authorityStr = sysUserService.getAuthorityStr(sysUser.getId());
+        HashMap<String, String> resultMap = new HashMap<>();
+        resultMap.put("username",sysUser.getUserName());
+        resultMap.put("authorityStr",authorityStr);
+        outputStream.write(JSONUtil.toJsonStr(ResultUtil.success(resultMap)).getBytes(StandardCharsets.UTF_8));
         outputStream.flush();
         outputStream.close();
     }

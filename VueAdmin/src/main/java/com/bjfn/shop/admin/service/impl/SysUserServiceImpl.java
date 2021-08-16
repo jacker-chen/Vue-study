@@ -8,6 +8,7 @@ import com.bjfn.shop.admin.entity.SysAuth;
 import com.bjfn.shop.admin.entity.SysRole;
 import com.bjfn.shop.admin.entity.SysUser;
 import com.bjfn.shop.admin.entity.SysUserRole;
+import com.bjfn.shop.admin.mapper.SysRoleMapper;
 import com.bjfn.shop.admin.mapper.SysUserMapper;
 import com.bjfn.shop.admin.mapper.SysUserRoleMapper;
 import com.bjfn.shop.admin.service.ISysUserService;
@@ -20,11 +21,10 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -49,7 +49,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private SysUserRoleMapper sysUserRoleMapper;
 
     @Autowired
+    private SysUserRoleServiceImpl sysUserRoleService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
 
     @Override
     public List<SysUser> getUserList() {
@@ -114,6 +120,35 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
         int i = sysUserMapper.updateById(sysUser);
         return i;
+    }
+
+    @Transactional
+    @Override
+    public boolean allotRole(Long userId, Long[] roleIds) {
+        sysUserRoleService.remove(new QueryWrapper<SysUserRole>().eq("user_id",userId));
+        ArrayList<SysUserRole> sysUserRoles = new ArrayList<>(roleIds.length);
+        for (Long roleid: roleIds) {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(userId);
+            sysUserRole.setRoleId(roleid);
+            sysUserRoles.add(sysUserRole);
+        }
+        return sysUserRoleService.saveBatch(sysUserRoles);
+    }
+
+    @Override
+    public Map<String, Object> getUserRoleById(Long userId) {
+        List<SysRole> roleByUserId = sysUserMapper.getRoleByUserId(userId);
+        List<Long> roleIdList = roleByUserId.stream().map(SysRole::getId).collect(Collectors.toList());
+        
+        List<SysRole> roleList = sysRoleMapper.selectList(null);
+       // List<SysRole> roleListNo = roleList.stream().filter(r -> roleIdList.indexOf(r.getId()) == -1).collect(Collectors.toList());
+        HashMap<String, Object> result = new HashMap<>();
+        //result.put("roleData",roleListNo);
+        result.put("allotRoleData",roleByUserId);
+        result.put("allRoleList",roleList);
+
+        return result;
     }
 
     /**
