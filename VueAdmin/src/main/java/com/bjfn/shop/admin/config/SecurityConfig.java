@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     //白名单列表
     private final static String[] URL_WHITELIST = {
-        "/login", "/sys/logout","/captcha"
+        "/login", "/sys/logout","/captcha","/druid/**"
     };
 
     //登录失败处理器
