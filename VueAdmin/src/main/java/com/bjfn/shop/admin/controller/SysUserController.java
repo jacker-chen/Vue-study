@@ -1,11 +1,10 @@
 package com.bjfn.shop.admin.controller;
 
 
-import com.bjfn.shop.admin.common.lang.Result;
 import com.bjfn.shop.admin.entity.SysUser;
 import com.bjfn.shop.admin.service.ISysUserService;
-import com.bjfn.shop.admin.util.ResultUtil;
-import com.sun.istack.internal.NotNull;
+import com.bjfn.shop.admin.common.lang.Result;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 /**

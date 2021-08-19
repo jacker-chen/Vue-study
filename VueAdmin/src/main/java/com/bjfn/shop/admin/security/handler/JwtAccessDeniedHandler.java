@@ -2,7 +2,7 @@ package com.bjfn.shop.admin.security.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.bjfn.shop.admin.common.lang.Result;
-import com.bjfn.shop.admin.util.ResultUtil;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package com.bjfn.shop.admin.security.filter;
 
 import com.bjfn.shop.admin.common.exception.KaptchaException;
 import com.bjfn.shop.admin.security.handler.LoginFailureHandler;
-import com.bjfn.shop.admin.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
