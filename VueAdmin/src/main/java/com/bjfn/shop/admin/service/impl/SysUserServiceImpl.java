@@ -13,7 +13,7 @@ import com.bjfn.shop.admin.mapper.SysUserMapper;
 import com.bjfn.shop.admin.mapper.SysUserRoleMapper;
 import com.bjfn.shop.admin.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bjfn.shop.admin.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

@@ -2,7 +2,7 @@ package com.bjfn.shop.admin.security.handler;
 
 import cn.hutool.json.JSONUtil;
 import com.bjfn.shop.admin.common.lang.Result;
-import com.bjfn.shop.admin.util.ResultUtil;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
 /**
  *认证失败处理器

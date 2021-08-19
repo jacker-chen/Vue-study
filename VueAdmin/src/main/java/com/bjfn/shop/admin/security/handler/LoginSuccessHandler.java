@@ -1,12 +1,11 @@
 package com.bjfn.shop.admin.security.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.bjfn.shop.admin.common.lang.Result;
 import com.bjfn.shop.admin.entity.SysUser;
 import com.bjfn.shop.admin.service.impl.SysUserServiceImpl;
 import com.bjfn.shop.admin.util.JwtUtil;
-import com.bjfn.shop.admin.util.RedisUtil;
-import com.bjfn.shop.admin.util.ResultUtil;
+import com.bjfn.shop.admin.common.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;

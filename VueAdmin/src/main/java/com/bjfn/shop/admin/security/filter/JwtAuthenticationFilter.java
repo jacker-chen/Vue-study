@@ -1,17 +1,14 @@
 package com.bjfn.shop.admin.security.filter;
 
 import cn.hutool.core.util.StrUtil;
-import com.bjfn.shop.admin.common.exception.KaptchaException;
 import com.bjfn.shop.admin.entity.SysUser;
-import com.bjfn.shop.admin.mapper.SysUserMapper;
 import com.bjfn.shop.admin.service.impl.SysUserServiceImpl;
 import com.bjfn.shop.admin.util.JwtUtil;
-import com.bjfn.shop.admin.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.RedisUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 

@@ -1,4 +1,5 @@
-package com.bjfn.shop.admin.util;
+package com.bjfn.shop.admin.common.util;
+
 
 import com.bjfn.shop.admin.common.lang.Result;
 import com.bjfn.shop.admin.common.lang.ResultEnum;
@@ -9,7 +10,7 @@ import com.bjfn.shop.admin.common.lang.ResultEnum;
 
 public class ResultUtil {
 
-    public static <T> Result<T>  defineSuccess(Integer code, T data) {
+    public static <T> Result<T> defineSuccess(Integer code, T data) {
         Result result = new Result<>();
         return result.setCode(code).setData(data);
     }

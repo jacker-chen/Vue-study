@@ -1,10 +1,10 @@
 package com.bjfn.shop.admin.security.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.bjfn.shop.admin.common.lang.Result;
 import com.bjfn.shop.admin.util.JwtUtil;
-import com.bjfn.shop.admin.util.RedisUtil;
-import com.bjfn.shop.admin.util.ResultUtil;
+import com.bjfn.shop.admin.common.lang.Result;
+import com.bjfn.shop.admin.common.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

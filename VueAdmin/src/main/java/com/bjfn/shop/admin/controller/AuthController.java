@@ -2,15 +2,11 @@ package com.bjfn.shop.admin.controller;
 
 
 import cn.hutool.core.lang.UUID;
-import cn.hutool.core.map.MapBuilder;
-import cn.hutool.core.map.MapUtil;
 import com.bjfn.shop.admin.common.lang.Result;
-import com.bjfn.shop.admin.util.RedisUtil;
-import com.bjfn.shop.admin.util.ResultUtil;
+import com.bjfn.shop.admin.common.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import com.google.code.kaptcha.Producer;
-import javafx.beans.binding.MapBinding;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sun.misc.BASE64Encoder;
@@ -20,7 +16,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 @RestController
 public class AuthController {

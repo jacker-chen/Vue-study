@@ -1,7 +1,7 @@
 package com.bjfn.shop.admin.common.exception;
 
 import com.bjfn.shop.admin.common.lang.Result;
-import com.bjfn.shop.admin.util.ResultUtil;
+import com.bjfn.shop.admin.common.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
