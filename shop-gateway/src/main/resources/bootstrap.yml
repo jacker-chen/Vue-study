@@ -1,0 +1,27 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: shop-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.0.102:8848
+      config:
+        server-addr: 192.168.0.102:8848
+        file-extension: yaml
+        group: dev
+        prefix: ${spring.application.name}
+  profiles:
+    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    gateway:
+      enabled: true
+    health:
+      show-details: always
