@@ -12,9 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 跨域配置类
  */
 
-@Configuration
+//@Configuration//已在网关配置了跨域配置，不用重复配置
 public class CorsConfig implements WebMvcConfigurer {
-
+/*
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
@@ -38,5 +38,5 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT")
                 .maxAge(3600);
-    }
+    }*/
 }

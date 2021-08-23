@@ -3,7 +3,7 @@ package com.bjfn.shop.admin;
 import com.bjfn.shop.admin.security.UserDetailServiceImpl;
 import com.bjfn.shop.admin.service.impl.SysUserServiceImpl;
 import com.bjfn.shop.admin.util.JwtUtil;
-import com.bjfn.shop.admin.util.RedisUtil;
+import com.bjfn.shop.admin.common.util.RedisUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 
 @SpringBootTest
